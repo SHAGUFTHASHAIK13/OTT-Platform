@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="S.S. - Premium OTT Video Discovery Platform. Browse, search and watch public videos from YouTube, Vimeo, and Dailymotion in a cinema-inspired UI.">
+  <title>S.S. | Discover Premium Videos</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Premium Loader Screen -->
+  <div id="app-loader" class="app-loader">
+    <div class="loader-content">
+      <h1 class="loader-logo">S.S.</h1>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header id="main-header" class="main-header">
+    <div class="header-left">
+      <a href="#" class="logo" id="logo-link">S.S.</a>
+      <nav class="nav-links">
+        <a href="#" class="nav-link active" data-target="home">Home</a>
+        <a href="#" class="nav-link" data-target="watchlist">My List</a>
+        <a href="#" class="nav-link" data-target="history">History</a>
+        <a href="#" class="nav-link" data-target="platforms">Platforms</a>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <!-- Search Box -->
+      <div class="search-box" id="search-container">
+        <i class="fas fa-search search-icon" id="search-trigger"></i>
+        <input type="text" id="search-input" placeholder="Titles, channels, genres..." autocomplete="off">
+        <i class="fas fa-times search-clear" id="search-clear-btn" style="display: none;"></i>
+      </div>
+
+      <!-- Settings Icon -->
+      <button class="icon-btn" id="settings-toggle" title="Settings">
+        <i class="fas fa-cog"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Platform Filter bar (Visible on Browse/Platform Nav) -->
+  <div id="filter-bar" class="filter-bar">
+    <button class="filter-chip active" data-platform="all">All Platforms</button>
+    <button class="filter-chip" data-platform="youtube"><i class="fab fa-youtube color-yt"></i> YouTube</button>
+    <button class="filter-chip" data-platform="vimeo"><i class="fab fa-vimeo-v color-vimeo"></i> Vimeo</button>
+    <button class="filter-chip" data-platform="dailymotion"><i class="fas fa-play-circle color-dm"></i> Dailymotion</button>
+  </div>
+
+  <!-- Main View Container -->
+  <main id="main-content">
+    
+    <!-- Home / Browse Page -->
+    <section id="browse-page" class="active-view">
+      <!-- Hero Billboard Banner -->
+      <div id="hero-billboard" class="hero-billboard">
+        <div class="billboard-background-overlay"></div>
+        <div class="billboard-image-holder" id="hero-bg-image"></div>
+        
+        <div class="billboard-content">
+          <div class="billboard-badge"><i class="fas fa-star text-accent"></i> Spotlight</div>
+          <h1 id="hero-title" class="billboard-title">Sights of Space</h1>
+          <div class="billboard-meta">
+            <span class="match-score" id="hero-match">99% Match</span>
+            <span class="meta-year" id="hero-year">2025</span>
+            <span class="meta-rating" id="hero-rating">G</span>
+            <span class="meta-platform-badge" id="hero-platform-badge"><i class="fab fa-youtube"></i> YouTube</span>
+          </div>
+          <p id="hero-description" class="billboard-description">
+            Experience the jaw-dropping beauty and terrifying vastness of space through the eyes of NASA astronauts.
+          </p>
+          <div class="billboard-actions">
+            <button class="btn btn-primary" id="hero-play-btn">
+              <i class="fas fa-play"></i> Watch Now
+            </button>
+            <button class="btn btn-secondary" id="hero-watchlist-btn">
+              <i class="fas fa-plus"></i> My List
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotstar Brand Channels Grid -->
+      <div class="brand-hubs-grid">
+        <div class="brand-hub-card" data-brand="youtube">
+          <div class="brand-glow-bg bg-glow-yt"></div>
+          <i class="fab fa-youtube brand-logo color-yt"></i>
+          <span class="brand-name">YOUTUBE</span>
+        </div>
+        <div class="brand-hub-card" data-brand="vimeo">
+          <div class="brand-glow-bg bg-glow-vimeo"></div>
+          <i class="fab fa-vimeo-v brand-logo color-vimeo"></i>
+          <span class="brand-name">VIMEO</span>
+        </div>
+        <div class="brand-hub-card" data-brand="dailymotion">
+          <div class="brand-glow-bg bg-glow-dm"></div>
+          <i class="fas fa-play-circle brand-logo color-dm"></i>
+          <span class="brand-name">DAILYMOTION</span>
+        </div>
+        <div class="brand-hub-card" data-brand="ss_studios">
+          <div class="brand-glow-bg bg-glow-ss"></div>
+          <i class="fas fa-film brand-logo color-ss"></i>
+          <span class="brand-name">S.S. STUDIOS</span>
+        </div>
+        <div class="brand-hub-card" data-brand="sports">
+          <div class="brand-glow-bg bg-glow-sports"></div>
+          <i class="fas fa-running brand-logo color-sports"></i>
+          <span class="brand-name">SPORTS HUB</span>
+        </div>
+      </div>
+
+      <!-- Zee5 Regional Languages Filter Row -->
+      <div class="languages-filter-container">
+        <div class="languages-track">
+          <button class="language-pill active" data-lang="all"><i class="fas fa-globe"></i> All Languages</button>
+          <button class="language-pill" data-lang="English">English</button>
+          <button class="language-pill" data-lang="Hindi">Hindi</button>
+          <button class="language-pill" data-lang="Spanish">Spanish</button>
+          <button class="language-pill" data-lang="French">French</button>
+          <button class="language-pill" data-lang="Japanese">Japanese</button>
+        </div>
+      </div>
+
+      <!-- Categories Rows Container -->
+      <div class="category-rows-container">
+        
+        <!-- Live Sports Scorecard Row (JioHotstar Cricket theme) -->
+        <div class="category-row-wrapper" id="sports-row-wrapper">
+          <h2 class="row-heading"><span class="live-dot-pulse"></span> Live Sports & Scorecards</h2>
+          <div class="sports-scorecards-container">
+            
+            <!-- Scorecard 1: Cricket -->
+            <div class="sports-card" data-id="uPH8ZgD_M1g" data-platform="youtube">
+              <div class="sports-card-glow"></div>
+              <div class="sports-header">
+                <span class="sports-badge live"><i class="fas fa-circle"></i> LIVE</span>
+                <span class="tournament-name">ICC Men's T20 World Cup</span>
+              </div>
+              <div class="teams-score-row">
+                <div class="team-score">
+                  <span class="flag">🇮🇳</span> <span class="team-name">IND</span> <span class="score">142/2 <span class="overs">(18.2)</span></span>
+                </div>
+                <div class="team-score opponent">
+                  <span class="flag">🇦🇺</span> <span class="team-name">AUS</span> <span class="status">Yet to Bat</span>
+                </div>
+              </div>
+              <div class="sports-footer">
+                <span class="match-meta">Super 8 • Live from Kensington Oval</span>
+                <button class="btn-sports-watch"><i class="fas fa-play"></i> Watch Playback</button>
+              </div>
+            </div>
+
+            <!-- Scorecard 2: Soccer -->
+            <div class="sports-card" data-id="gEPmA3pPZ84" data-platform="youtube">
+              <div class="sports-card-glow"></div>
+              <div class="sports-header">
+                <span class="sports-badge completed">COMPLETED</span>
+                <span class="tournament-name">La Liga Santander</span>
+              </div>
+              <div class="teams-score-row">
+                <div class="team-score winner">
+                  <span class="flag">🇪🇸</span> <span class="team-name">BAR</span> <span class="score">2</span>
+                </div>
+                <div class="team-score opponent">
+                  <span class="flag">🇪🇸</span> <span class="team-name">RMA</span> <span class="score">1</span>
+                </div>
+              </div>
+              <div class="sports-footer">
+                <span class="match-meta">El Clásico Highlights • Camp Nou</span>
+                <button class="btn-sports-watch"><i class="fas fa-play"></i> Watch Highlights</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Live Search Results Section (Initially Hidden) -->
+        <div id="search-results-section" class="category-row-wrapper" style="display: none;">
+          <h2 class="row-heading">Search Results for "<span id="search-query-text"></span>"</h2>
+          <div class="search-results-grid" id="search-results-grid">
+            <!-- Results dynamically injected here -->
+          </div>
+          <div class="empty-state" id="search-empty-state" style="display: none;">
+            <i class="fas fa-video-slash"></i>
+            <h3>No results found</h3>
+            <p>Try searching for different keywords or check your connection/API keys.</p>
+          </div>
+        </div>
+
+        <!-- Watchlist Row -->
+        <div class="category-row-wrapper" id="watchlist-row-wrapper" style="display: none;">
+          <h2 class="row-heading">My List</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="watchlist-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Watch History Row -->
+        <div class="category-row-wrapper" id="history-row-wrapper" style="display: none;">
+          <h2 class="row-heading">Continue Watching</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="history-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Dynamic Category Rows -->
+        <!-- Row 1: Trending Now -->
+        <div class="category-row-wrapper">
+          <h2 class="row-heading">Trending Now</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="trending-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Row 2: Sci-Fi & Space -->
+        <div class="category-row-wrapper">
+          <h2 class="row-heading">Sci-Fi & Space</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="scifi-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Row 3: Nature & Wildlife -->
+        <div class="category-row-wrapper">
+          <h2 class="row-heading">Nature & Wildlife</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="nature-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Row 4: Short Films & Animation -->
+        <div class="category-row-wrapper">
+          <h2 class="row-heading">Short Films & Animation</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="animation-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Row 5: Music & Shows -->
+        <div class="category-row-wrapper">
+          <h2 class="row-heading">Music & Entertainment</h2>
+          <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" disabled><i class="fas fa-chevron-left"></i></button>
+            <div class="video-carousel" id="music-carousel">
+              <!-- Dynamically populated -->
+            </div>
+            <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- My List Page View (Grid view of watchlist) -->
+    <section id="watchlist-page" class="generic-grid-page" style="display: none;">
+      <h1 class="page-title">My List</h1>
+      <div class="video-grid" id="watchlist-grid">
+        <!-- Dynamically injected -->
+      </div>
+      <div class="empty-state" id="watchlist-empty-state">
+        <i class="fas fa-plus-circle"></i>
+        <h3>Your list is empty</h3>
+        <p>Explore titles and add them to "My List" to watch them later.</p>
+        <button class="btn btn-primary" onclick="window.appController.navigateTo('home')">Browse Videos</button>
+      </div>
+    </section>
+
+    <!-- History Page View (Grid view of watch history) -->
+    <section id="history-page" class="generic-grid-page" style="display: none;">
+      <div class="page-title-row">
+        <h1 class="page-title">Watch History</h1>
+        <button class="btn btn-secondary btn-sm" id="clear-history-btn">Clear History</button>
+      </div>
+      <div class="video-grid" id="history-grid">
+        <!-- Dynamically injected -->
+      </div>
+      <div class="empty-state" id="history-empty-state">
+        <i class="fas fa-history"></i>
+        <h3>No history found</h3>
+        <p>Videos you watch will appear here so you can easily pick up where you left off.</p>
+        <button class="btn btn-primary" onclick="window.appController.navigateTo('home')">Start Watching</button>
+      </div>
+    </section>
+
+    <!-- Platforms Page View (Detailed filters/breakdowns by channel/platform) -->
+    <section id="platforms-page" class="generic-grid-page" style="display: none;">
+      <h1 class="page-title">Platforms & Channels</h1>
+      <p class="section-description">Filter content by platforms and browse live aggregations.</p>
+      
+      <div class="platforms-showcase">
+        <div class="platform-card" data-platform="youtube">
+          <i class="fab fa-youtube platform-icon bg-yt"></i>
+          <h3>YouTube</h3>
+          <p>Browse content sourced via official YouTube API.</p>
+          <span class="badge">Live & Demo</span>
+        </div>
+        <div class="platform-card" data-platform="vimeo">
+          <i class="fab fa-vimeo-v platform-icon bg-vimeo"></i>
+          <h3>Vimeo</h3>
+          <p>Explore high-fidelity creator spotlight clips.</p>
+          <span class="badge">Live & Demo</span>
+        </div>
+        <div class="platform-card" data-platform="dailymotion">
+          <i class="fas fa-play-circle platform-icon bg-dm"></i>
+          <h3>Dailymotion</h3>
+          <p>Watch trending videos from around the globe.</p>
+          <span class="badge">Public Live Access</span>
+        </div>
+      </div>
+
+      <h2 class="section-subtitle" id="platform-subtitle">All Sourced Videos</h2>
+      <div class="video-grid" id="platforms-grid">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Universal Video Player Overlay Modal -->
+  <div id="player-modal" class="modal-overlay player-modal-overlay">
+    <button class="modal-close" id="player-close-btn" title="Close Playback">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="player-modal-content">
+      <!-- Responsive Video Player Container -->
+      <div class="player-viewport">
+        <div class="iframe-container" id="player-iframe-wrapper">
+          <!-- Dynamic Iframe will be injected here -->
+        </div>
+      </div>
+
+      <!-- Video Details Details Area -->
+      <div class="player-details">
+        <div class="details-main">
+          <div class="details-top">
+            <span class="match-score" id="player-match">99% Match</span>
+            <span class="meta-year" id="player-year">2025</span>
+            <span class="meta-rating" id="player-rating">G</span>
+            <span class="meta-duration" id="player-duration">4:32</span>
+            <span class="platform-badge" id="player-platform"><i class="fab fa-youtube"></i> YouTube</span>
+          </div>
+          
+          <h2 id="player-title" class="video-title">Sights of Space</h2>
+          
+          <div class="channel-info">
+            <i class="fas fa-user-circle"></i>
+            <span id="player-channel">NASA Official</span>
+            <span class="separator">•</span>
+            <span id="player-views">3.4M views</span>
+            <span class="separator">•</span>
+            <span id="player-date">Oct 12, 2025</span>
+          </div>
+
+          <p id="player-description" class="video-description">
+            Experience the jaw-dropping beauty and terrifying vastness of space.
+          </p>
+        </div>
+
+        <div class="details-sidebar">
+          <button class="btn btn-secondary btn-full" id="player-watchlist-btn">
+            <i class="fas fa-plus"></i> Add to List
+          </button>
+          
+          <div class="details-share">
+            <span>Share:</span>
+            <button class="icon-btn-sm" id="share-link" title="Copy Link"><i class="fas fa-link"></i></button>
+            <button class="icon-btn-sm" id="share-twitter" title="Twitter"><i class="fab fa-twitter"></i></button>
+            <button class="icon-btn-sm" id="share-facebook" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommended Videos Row inside Player -->
+      <div class="player-recommendations">
+        <h3 class="row-heading">More Like This</h3>
+        <div class="recommendations-grid" id="recommendations-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Configuration Modal -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2><i class="fas fa-cog"></i> Platform Settings</h2>
+        <button class="modal-close-simple" id="settings-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- API Mode Switcher -->
+        <div class="settings-section">
+          <h3>Connection Mode</h3>
+          <p class="help-text">Choose between Demo Mode (offline curated assets + basic public feeds) or Live API Mode (pulls real-time queries using your developers keys).</p>
+          
+          <div class="toggle-control">
+            <label class="switch">
+              <input type="checkbox" id="api-mode-toggle">
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label" id="api-mode-label">Demo Mode Active</span>
+          </div>
+        </div>
+
+        <!-- API Credentials Block -->
+        <div class="settings-section" id="api-credentials-section">
+          <h3>Developer API Keys</h3>
+          <p class="help-text">Input your official keys to connect to live databases. Keys are saved securely in your browser's local storage.</p>
+          
+          <div class="form-group">
+            <label for="yt-api-key">YouTube Data API v3 Key</label>
+            <div class="input-with-icon">
+              <i class="fab fa-youtube color-yt"></i>
+              <input type="password" id="yt-api-key" placeholder="Enter YouTube API Key">
+            </div>
+            <span class="field-info"><a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Get YouTube Key <i class="fas fa-external-link-alt"></i></a></span>
+          </div>
+
+          <div class="form-group">
+            <label for="vimeo-access-token">Vimeo Personal Access Token</label>
+            <div class="input-with-icon">
+              <i class="fab fa-vimeo-v color-vimeo"></i>
+              <input type="password" id="vimeo-access-token" placeholder="Enter Vimeo Access Token">
+            </div>
+            <span class="field-info"><a href="https://developer.vimeo.com/api/guides/start" target="_blank" rel="noopener">Get Vimeo Token <i class="fas fa-external-link-alt"></i></a></span>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="settings-section">
+          <h3>Local Storage & Reset</h3>
+          <p class="help-text">Clear S.S. local watchlist history and reset layout configurations.</p>
+          <button class="btn btn-danger btn-sm" id="reset-all-btn">Reset All Data</button>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <span class="save-status" id="settings-status"></span>
+        <button class="btn btn-secondary" id="settings-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="settings-save-btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Banner Toast -->
+  <div id="toast-notification" class="toast-notification">
+    <i class="fas fa-check-circle" id="toast-icon"></i>
+    <span id="toast-message">Added to Watchlist</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="mockData.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
